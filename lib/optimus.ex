@@ -442,5 +442,16 @@ defimpl Optimus.Format, for: Optimus do
   def format_in_error(optimus), do: optimus.name
   def format_in_usage(optimus), do: optimus.name
 
-  def help(optimus), do: optimus.about || ""
+  def help(optimus) do
+    about = optimus.about
+
+    if is_binary(about) and about != "" do
+      about
+      |> String.split(".")
+      |> Enum.at(0)
+      |> String.trim()
+    else
+      ""
+    end
+  end
 end
